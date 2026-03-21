@@ -79,6 +79,6 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Console.WriteLine("The vehicle is moving down the road");
         }
 
-        public abstract void Update(TrafficLight lightS);
+        public abstract void Update(TrafficLight light, List<Vehicle> vehicles);
     }
 }

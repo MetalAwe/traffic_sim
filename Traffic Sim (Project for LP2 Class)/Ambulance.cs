@@ -13,9 +13,32 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             SirenActive = true;
             setSpeed(speed);
         }
-        public override void Update(TrafficLight light)
+        public override void Update(TrafficLight light, List<Vehicle> allVehicles)
         {
-            this.setXPosition(getXPosition() + getSpeed()); //ambulances do not care about lights
+            bool pathIsBlocked = false;
+            foreach (Vehicle vehicle in allVehicles)
+            {
+                if (vehicle == this)
+                {
+                    continue; // Skip self
+                }
+
+                if(vehicle.getYPosition !=  this.getYPosition )
+                {
+                    continue; // Skip vehicles in different lanes
+                }
+                double distance = vehicle.getXPosition() - this.getXPosition();
+
+                if (distance > 0 && distance < 60)
+                {
+                    pathIsBlocked = true;
+                    break; //We found someone, there is no need to keep looking
+                }
+            }
+            if (pathIsBlocked)
+            {
+
+            }else this.setXPosition(getXPosition() + getSpeed()); //ambulances do not care about lights
         }
     }
 }

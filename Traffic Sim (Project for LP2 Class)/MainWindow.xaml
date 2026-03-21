@@ -8,7 +8,7 @@
         Title="Traffic Simulator" Height="450" Width="800">
     <Grid>
         <Canvas x:Name="TrafficCanvas" Background="LightGray">
-            <Button Content="LightChangeButton" Canvas.Left="635" Canvas.Top="385" Click="ChangeLight"/>
+            <Button Content="Change Light" Canvas.Left="635" Canvas.Top="385" Click="ChangeLight"/>
         </Canvas>
     </Grid>
 </Window>

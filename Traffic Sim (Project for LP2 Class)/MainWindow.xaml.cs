@@ -28,6 +28,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Car car = new Car("B250POD", 10, 0, 100, Brushes.Blue);
             allVehicles.Add(car);
             TrafficCanvas.Children.Add(car.Shape);
+
+            Car car2 = new Car("C250POD", 10, -100, 100, Brushes.Green);
+            allVehicles.Add(car2);
+            TrafficCanvas.Children.Add(car2.Shape);
+
             Ambulance ambulance = new Ambulance("A23145", 10, 0, 200, Brushes.White);
             allVehicles.Add(ambulance);
             TrafficCanvas.Children.Add(ambulance.Shape);
@@ -48,7 +53,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             foreach(Vehicle vehicle in allVehicles)
             {
                 //we run the logic
-                vehicle.Update(mainLight);
+                vehicle.Update(mainLight, allVehicles);
                 
                 //Update the visual position on the canvas:
                 Canvas.SetLeft(vehicle.Shape, vehicle.getXPosition());

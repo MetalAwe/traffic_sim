@@ -11,10 +11,26 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         {
 
         }
-        public override void Update(TrafficLight light)
+        public override void Update(TrafficLight light, List<Vehicle> AllVehicles)
         {
+            bool pathIsBlocked = false;
+            foreach(Vehicle vehicle in AllVehicles)
+            {
+                if (vehicle == this)
+                {
+                    continue; // Skip self
+                }
+
+                double distance = vehicle.getXPosition() - this.getXPosition();
+
+                if(distance > 0 && distance < 60)
+                {
+                    pathIsBlocked = true;
+                    break; //We found someone, there is no need to keep looking
+                }
+            }
             bool atStopLine = (getXPosition() > 250 && getXPosition() < 300);
-            if (light.CurrentColor == LightColor.red && atStopLine)
+            if (light.CurrentColor == LightColor.red && atStopLine || pathIsBlocked)
             {
                 //setSpeed(0);
             }
