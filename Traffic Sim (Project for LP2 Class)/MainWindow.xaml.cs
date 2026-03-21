@@ -20,6 +20,15 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         List<Vehicle> allVehicles = new List<Vehicle>();
         TrafficLight mainLight = new TrafficLight();
         DispatcherTimer timer = new DispatcherTimer();
+        Random rng = new Random();
+        Brush[] availableColors =
+        {
+            Brushes.Black,
+            Brushes.Red,
+            Brushes.Green,
+            Brushes.Blue,
+            Brushes.White
+        };
         public MainWindow()
         {
             InitializeComponent();
@@ -50,6 +59,8 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         private void GameLoop(object sender, EventArgs e)
         {
+            List<Vehicle> vehiclesToDelete = new List<Vehicle>();
+
             foreach(Vehicle vehicle in allVehicles)
             {
                 //we run the logic
@@ -65,11 +76,30 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                     vehicle.setXPosition(-40);
                 }
             }
+
         }
 
         private void ChangeLight(object sender, RoutedEventArgs e)
         {
             mainLight.ChangeColor();
+        }
+
+        private void AddCar(object sender, RoutedEventArgs e)
+        {
+            double randomY = rng.Next(0, 2) == 0 ? 50 : 100;
+            double randomSpeed = rng.Next(5, 15);
+            int colorIndex = rng.Next(availableColors.Length);
+            Brush randomColor = availableColors[colorIndex];
+            Car newCar = new Car("Car" + allVehicles.Count, randomSpeed, -100, randomY, randomColor);
+            allVehicles.Add(newCar);
+            TrafficCanvas.Children.Add(newCar.Shape);
+        }
+
+        private void AddAmbulance(object sender, RoutedEventArgs e)
+        {
+            Ambulance newAmbulance = new Ambulance("B23145", 10, -100, 200, Brushes.White);
+            allVehicles.Add(newAmbulance);
+            TrafficCanvas.Children.Add(newAmbulance.Shape);
         }
     }
 }

@@ -32,16 +32,14 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             bool atStopLine = (getXPosition() > 250 && getXPosition() < 300);
             if (light.CurrentColor == LightColor.red && atStopLine || pathIsBlocked)
             {
-                //setSpeed(0);
+
             }
             else if (light.CurrentColor == LightColor.yellow && atStopLine)
             {
-                //setSpeed(getSpeed() / 2);
                 this.setXPosition(getXPosition() + (getSpeed() / 2));
             }
             else
             {
-                //setSpeed(10);
                 this.setXPosition(getXPosition() + getSpeed());
             }
         }
