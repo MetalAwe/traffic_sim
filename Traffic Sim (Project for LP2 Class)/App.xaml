@@ -1,0 +1,9 @@
+﻿<Application x:Class="Traffic_Sim__Project_for_LP2_Class_.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Traffic_Sim__Project_for_LP2_Class_"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
