@@ -12,6 +12,7 @@
                 <Button Content="Change Light" Width="100" Margin="5" Click="ChangeLight" Height="30"/>
                 <Button Content="Add Car" Width="100" Margin="5" Click="AddCar" Height="30"/>
                 <Button Content="Add Ambulance" Width="100" Margin="5" Click="AddAmbulance" Height="30"/>
+                <Button Content="Add Bus" Width="100" Margin="5" Click="AddBus" Height="30"/>
             </StackPanel>
         </Canvas>
     </Grid>

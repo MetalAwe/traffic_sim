@@ -25,7 +25,6 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         {
             Brushes.Black,
             Brushes.Red,
-            Brushes.Green,
             Brushes.Blue,
             Brushes.White
         };
@@ -38,13 +37,17 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             allVehicles.Add(car);
             TrafficCanvas.Children.Add(car.Shape);
 
-            Car car2 = new Car("C250POD", 10, -100, 100, Brushes.Green);
+            Car car2 = new Car("C250POD", 10, -100, 100, Brushes.Yellow);
             allVehicles.Add(car2);
             TrafficCanvas.Children.Add(car2.Shape);
 
             Ambulance ambulance = new Ambulance("A23145", 10, 0, 200, Brushes.White);
             allVehicles.Add(ambulance);
             TrafficCanvas.Children.Add(ambulance.Shape);
+
+            Bus bus = new Bus("D250POD", 5, -200, 50, Brushes.Green);
+            allVehicles.Add(bus);
+            TrafficCanvas.Children.Add(bus.Shape);
 
             //Position the light visually on the canvas:
             Canvas.SetLeft(mainLight.VisualShape, 300);
@@ -100,6 +103,13 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Ambulance newAmbulance = new Ambulance("B23145", 10, -100, 200, Brushes.White);
             allVehicles.Add(newAmbulance);
             TrafficCanvas.Children.Add(newAmbulance.Shape);
+        }
+
+        private void AddBus(object sender, RoutedEventArgs e)
+        {
+            Bus newBus = new Bus("D250POD", 5, -100, 50, Brushes.Green);
+            allVehicles.Add(newBus);
+            TrafficCanvas.Children.Add(newBus.Shape);
         }
     }
 }

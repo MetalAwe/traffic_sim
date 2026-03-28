@@ -1,30 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 //the following two are for the vehicle to actually appear on the screen
 using System.Windows.Shapes;
 using System.Windows.Media;
+
 namespace Traffic_Sim__Project_for_LP2_Class_
 {
-    public class Car : Vehicle
+    internal class Bus : Vehicle
     {
-        public Car (string name, double speed, double x, double y, Brush color) : base (name, speed, x, y, color)
+        public Bus(string name, double speed, double x, double y, Brush color) : base(name, speed, x, y, color)
         {
-
+            setSpeed(speed);
+            Shape = new Rectangle
+            {
+                Width = 60,
+                Height = 30,
+                Fill = color
+            };
         }
-        public override void Update(TrafficLight light, List<Vehicle> AllVehicles)
+        public override void Update(TrafficLight light, List<Vehicle> vehicles)
         {
             bool pathIsBlocked = false;
-            foreach(Vehicle vehicle in AllVehicles)
+            foreach (Vehicle vehicle in vehicles)
             {
                 if (vehicle == this)
                 {
-                    continue; // Skip self
+                    continue; //skips itself
                 }
+                if(vehicle.getYPosition() != this.getYPosition())
+                {
+                    continue; //skips vehicles that are not in the same lane
+                }
+                
+                double distance = vehicle.getXPosition() - this.getXPosition() - 10;
 
-                double distance = vehicle.getXPosition() - this.getXPosition();
-                double laneDifference = Math.Abs(vehicle.getYPosition() - this.getYPosition());
-
-                if (distance > 0 && distance < 60 & laneDifference == 0)
+                if (distance > 0 && distance < 60)
                 {
                     pathIsBlocked = true;
                     break; //We found someone, there is no need to keep looking
@@ -44,5 +55,5 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                 this.setXPosition(getXPosition() + getSpeed());
             }
         }
+        }
     }
-}

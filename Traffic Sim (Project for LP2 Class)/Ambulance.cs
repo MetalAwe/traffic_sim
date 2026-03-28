@@ -23,10 +23,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                     continue; // Skip self
                 }
 
-                if(vehicle.getYPosition !=  this.getYPosition )
+                if(vehicle.getYPosition() !=  this.getYPosition() )
                 {
                     continue; // Skip vehicles in different lanes
                 }
+                
                 double distance = vehicle.getXPosition() - this.getXPosition();
 
                 if (distance > 0 && distance < 60)
@@ -35,10 +36,10 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                     break; //We found someone, there is no need to keep looking
                 }
             }
-            if (pathIsBlocked)
+            if (!pathIsBlocked)
             {
-
-            }else this.setXPosition(getXPosition() + getSpeed()); //ambulances do not care about lights
+                this.setXPosition(getXPosition() + getSpeed());
+            } //ambulances do not care about lights
         }
     }
 }
