@@ -17,6 +17,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static double[] Lanes = { 50, 100, 200 };
         List<Vehicle> allVehicles = new List<Vehicle>();
         TrafficLight mainLight = new TrafficLight();
         DispatcherTimer timer = new DispatcherTimer();
@@ -33,19 +34,19 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             InitializeComponent();
 
             //We create our objects
-            Car car = new Car("B250POD", 10, 0, 100, Brushes.Blue);
+            Car car = new Car("B250POD", 10, 0, 1, Brushes.Blue);
             allVehicles.Add(car);
             TrafficCanvas.Children.Add(car.Shape);
 
-            Car car2 = new Car("C250POD", 10, -100, 100, Brushes.Yellow);
+            Car car2 = new Car("C250POD", 10, -100, 1, Brushes.Yellow);
             allVehicles.Add(car2);
             TrafficCanvas.Children.Add(car2.Shape);
 
-            Ambulance ambulance = new Ambulance("A23145", 10, 0, 200, Brushes.White);
+            Ambulance ambulance = new Ambulance("A23145", 10, 0, 2, Brushes.White);
             allVehicles.Add(ambulance);
             TrafficCanvas.Children.Add(ambulance.Shape);
 
-            Bus bus = new Bus("D250POD", 5, -200, 50, Brushes.Green);
+            Bus bus = new Bus("D250POD", 5, -200, 0, Brushes.Green);
             allVehicles.Add(bus);
             TrafficCanvas.Children.Add(bus.Shape);
 
@@ -89,11 +90,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         private void AddCar(object sender, RoutedEventArgs e)
         {
-            double randomY = rng.Next(0, 2) == 0 ? 50 : 100;
+            int startingLane = rng.Next(0, MainWindow.Lanes.Length);
             double randomSpeed = rng.Next(5, 15);
             int colorIndex = rng.Next(availableColors.Length);
             Brush randomColor = availableColors[colorIndex];
-            Car newCar = new Car("Car" + allVehicles.Count, randomSpeed, -100, randomY, randomColor);
+            Car newCar = new Car("Car" + allVehicles.Count, randomSpeed, -100, startingLane, randomColor);
             allVehicles.Add(newCar);
             TrafficCanvas.Children.Add(newCar.Shape);
         }

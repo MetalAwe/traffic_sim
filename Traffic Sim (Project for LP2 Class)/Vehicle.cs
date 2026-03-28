@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 //the following two are for the vehicle to actually appear on the screen
 using System.Windows.Shapes;
-using System.Windows.Media; 
+using System.Windows.Media;
+using System.Runtime.CompilerServices;
 namespace Traffic_Sim__Project_for_LP2_Class_
 {
     public abstract class Vehicle
@@ -12,8 +13,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         private double speed;
         private double xPosition;
         private double yPosition;
+        protected double TargetY {  get; set; }
+        protected bool isChangingLanes { get; set; }
+        private const double LaneChangeSpeed = 5.0;
         public Rectangle Shape { get; set; }
-
+        protected int CurrentLaneIndex { get; set; }
         //getters and setters:
         public string getLicensePlate()
         {
@@ -56,12 +60,18 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         //constructors:
 
-        public Vehicle (string licensePlate, double speed, double xPosition, double yPosition, Brush color)
+        public Vehicle (string licensePlate, double speed, double xPosition, int startLaneIndex, Brush color)
         {
+            this.isChangingLanes = false;
             this.licensePlate = licensePlate;
             this.speed = speed;
+
+            this.CurrentLaneIndex = startLaneIndex;
+            double startY = MainWindow.Lanes[startLaneIndex];
+
             this.xPosition = xPosition;
-            this.yPosition = yPosition;
+            this.yPosition = startY;
+            this.TargetY = startY;
 
             Shape = new Rectangle
             {
@@ -72,8 +82,27 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         }
 
         //object methods:
+        protected void HandleLaneMovement()
+        {
+            if(Math.Abs(getYPosition() - TargetY) > 1)
+            {
+                isChangingLanes = true;
+                if (getYPosition() < TargetY)
+                {
+                    setYPosition(getYPosition() + LaneChangeSpeed);
 
-        
+                }
+                else
+                {
+                    setYPosition(getYPosition() - LaneChangeSpeed);
+                }
+            }
+            else
+            {
+                setYPosition(TargetY);
+                isChangingLanes=false;
+            }
+        }
         public virtual void Move()
         {
             Console.WriteLine("The vehicle is moving down the road");

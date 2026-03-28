@@ -9,7 +9,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 {
     internal class Bus : Vehicle
     {
-        public Bus(string name, double speed, double x, double y, Brush color) : base(name, speed, x, y, color)
+        public Bus(string name, double speed, double x, int startLaneIndex, Brush color) : base(name, speed, x, startLaneIndex, color)
         {
             setSpeed(speed);
             Shape = new Rectangle

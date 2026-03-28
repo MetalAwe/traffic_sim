@@ -9,7 +9,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
     public class Ambulance : Vehicle
     {
         private bool SirenActive {  get; set; }
-        public Ambulance(string name, double speed, double x, double y, Brush color) : base(name, speed, x, y, color) {
+        public Ambulance(string name, double speed, double x, int startLaneIndex, Brush color) : base(name, speed, x, startLaneIndex, color) {
             SirenActive = true;
             setSpeed(speed);
         }
