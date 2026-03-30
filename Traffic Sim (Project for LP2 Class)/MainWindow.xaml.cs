@@ -17,7 +17,10 @@ namespace Traffic_Sim__Project_for_LP2_Class_
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static double[] Lanes = { 50, 100, 200 };
+        public static double[] Lanes = { 60, 110, 180, 230 };
+        //Lane rules:
+        public static int BusLaneIndex = 0; //Buses must be in the top lane
+        public static int MedianIndex = 1; //the double yellow line is between lanes 1 & 2
         List<Vehicle> allVehicles = new List<Vehicle>();
         TrafficLight mainLight = new TrafficLight();
         DispatcherTimer timer = new DispatcherTimer();
@@ -50,15 +53,17 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             allVehicles.Add(bus);
             TrafficCanvas.Children.Add(bus.Shape);
 
-            //Position the light visually on the canvas:
-            Canvas.SetLeft(mainLight.VisualShape, 300);
-            Canvas.SetTop(mainLight.VisualShape, 150);
-            TrafficCanvas.Children.Add(mainLight.VisualShape);
-
             //We set up the timer to tick every 20 milliseconds
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Tick += GameLoop; // This calls the GameLoop method every tick
             timer.Start();
+
+            DrawRoad();
+            
+            //Position the light visually on the canvas:
+            Canvas.SetLeft(mainLight.VisualShape, 300);
+            Canvas.SetTop(mainLight.VisualShape, 142.5);
+            TrafficCanvas.Children.Add(mainLight.VisualShape);
         }
 
         private void GameLoop(object sender, EventArgs e)
@@ -79,6 +84,20 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                 {
                     vehicle.setXPosition(-40);
                 }
+            }
+
+            TxtVehicleCount.Text = allVehicles.Count.ToString();
+            if(mainLight.CurrentColor == LightColor.green)
+            {
+                LightIndicator.Fill = Brushes.Green;
+            }
+            else if(mainLight.CurrentColor == LightColor.yellow)
+            {
+                LightIndicator.Fill = Brushes.Yellow;
+            }
+            else
+            {
+                LightIndicator.Fill = Brushes.Red;
             }
 
         }
@@ -112,6 +131,48 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Bus newBus = new Bus("D250POD", 5, -100, 0, Brushes.Green);
             allVehicles.Add(newBus);
             TrafficCanvas.Children.Add(newBus.Shape);
+        }
+
+        private void DrawRoad()
+        {
+            Rectangle topShoulder = new Rectangle { Width = 2000, Height = 10, Fill = Brushes.DarkGray };
+            Canvas.SetTop(topShoulder, 40);
+            TrafficCanvas.Children.Add(topShoulder);
+
+            Rectangle bottomShoulder = new Rectangle { Width = 2000, Height = 10, Fill = Brushes.DarkGray };
+            Canvas.SetTop(bottomShoulder, 260);
+            TrafficCanvas.Children.Add(bottomShoulder);
+
+            Rectangle doubleLine1 = new Rectangle { Width = 2000, Height = 5, Fill = Brushes.Yellow };
+            Canvas.SetTop(doubleLine1, 145);
+            Rectangle doubleLine2 = new Rectangle { Width = 2000, Height = 5, Fill = Brushes.Yellow };
+            Canvas.SetTop(doubleLine2, 165);
+            TrafficCanvas.Children.Add(doubleLine1);
+            TrafficCanvas.Children.Add(doubleLine2);
+
+            for (int i = 0; i < 2000; i++)
+            {
+                Line dashedLane1 = new Line
+                {
+                    X1 = i * 40,
+                    Y1 = 95,
+                    X2 = i * 40 + 20,
+                    Y2 = 95,
+                    Stroke = Brushes.White,
+                    StrokeThickness = 2
+                };
+                Line dashedLane2 = new Line
+                {
+                    X1 = i * 40,
+                    Y1 = 215,
+                    X2 = i * 40 + 20,
+                    Y2 = 215,
+                    Stroke = Brushes.White,
+                    StrokeThickness = 2
+                };
+                TrafficCanvas.Children.Add(dashedLane1);
+                TrafficCanvas.Children.Add(dashedLane2);
+            }
         }
     }
 }

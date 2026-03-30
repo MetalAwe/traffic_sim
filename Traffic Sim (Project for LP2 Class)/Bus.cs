@@ -12,12 +12,6 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         public Bus(string name, double speed, double x, int startLaneIndex, Brush color) : base(name, speed, x, startLaneIndex, color)
         {
             setSpeed(speed);
-            Shape = new Rectangle
-            {
-                Width = 60,
-                Height = 30,
-                Fill = color
-            };
         }
         public override void Update(TrafficLight light, List<Vehicle> vehicles)
         {

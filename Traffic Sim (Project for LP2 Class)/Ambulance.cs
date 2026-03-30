@@ -45,8 +45,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             if (!pathIsBlocked)
             {
                 this.setXPosition(getXPosition() + getSpeed());
-            } //ambulances do not care about lights
-
+            } //ambulances do not care about lights when siren is active, they just go through, but they will try to change lanes to avoid traffic if possible
+            if (SirenActive)
+            {
+                this.Shape.Effect = (DateTime.Now.Millisecond % 200 < 100) ? new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Red, BlurRadius = 15 } : new System.Windows.Media.Effects.DropShadowEffect { Color = Colors.Blue, BlurRadius = 15 }; ;
+            }
         }
         private bool IsPathBlocked(List<Vehicle> allVehicles, double laneY, double distanceCheck)
         {

@@ -75,9 +75,21 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
             Shape = new Rectangle
             {
-                Width = 40,
+                Width = (this is Bus) ? 80 : 40,
                 Height = 20,
-                Fill = color
+                Fill = color,
+                RadiusX = 5,
+                RadiusY = 5,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1
+            };
+
+            Shape.Effect = new System.Windows.Media.Effects.DropShadowEffect
+            {
+                BlurRadius = 5,
+                Direction = 315,
+                Opacity = 0.3,
+                ShadowDepth = 2
             };
             //so that the vehicles can tilt when changing lanes (not required but looks nice)
             RotateTransform rotateTransform = new RotateTransform(0);
