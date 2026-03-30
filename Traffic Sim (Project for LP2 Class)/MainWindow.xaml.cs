@@ -101,14 +101,15 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         private void AddAmbulance(object sender, RoutedEventArgs e)
         {
-            Ambulance newAmbulance = new Ambulance("B23145", 10, -100, 200, Brushes.White);
+            int startingLane = rng.Next(0, MainWindow.Lanes.Length);
+            Ambulance newAmbulance = new Ambulance("Ambulance" + allVehicles.Count, 10, -100, startingLane, Brushes.White);
             allVehicles.Add(newAmbulance);
             TrafficCanvas.Children.Add(newAmbulance.Shape);
         }
 
         private void AddBus(object sender, RoutedEventArgs e)
         {
-            Bus newBus = new Bus("D250POD", 5, -100, 50, Brushes.Green);
+            Bus newBus = new Bus("D250POD", 5, -100, 0, Brushes.Green);
             allVehicles.Add(newBus);
             TrafficCanvas.Children.Add(newBus.Shape);
         }

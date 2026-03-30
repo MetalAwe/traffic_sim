@@ -60,7 +60,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                 if (vehicle == this) continue; // Skip self
                 if (Math.Abs(vehicle.getYPosition() - laneY) > 10) continue;
                 double dist = vehicle.getXPosition() - this.getXPosition();
-                if (dist > 0 && dist < distanceCheck)
+                if (dist > -20 && dist < distanceCheck)
                 {
                     return true; // Path is blocked
                 }

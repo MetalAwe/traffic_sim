@@ -79,28 +79,37 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                 Height = 20,
                 Fill = color
             };
+            //so that the vehicles can tilt when changing lanes (not required but looks nice)
+            RotateTransform rotateTransform = new RotateTransform(0);
+            this.Shape.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+            this.Shape.RenderTransform = rotateTransform;
         }
 
         //object methods:
         protected void HandleLaneMovement()
         {
-            if(Math.Abs(getYPosition() - TargetY) > 1)
+            RotateTransform rotateTransform = this.Shape.RenderTransform as RotateTransform;
+
+            if (Math.Abs(getYPosition() - TargetY) > 1)
             {
                 isChangingLanes = true;
                 if (getYPosition() < TargetY)
                 {
                     setYPosition(getYPosition() + LaneChangeSpeed);
+                    rotateTransform.Angle = 15; // Tilt right when moving down
 
                 }
                 else
                 {
                     setYPosition(getYPosition() - LaneChangeSpeed);
+                    rotateTransform.Angle = -15; // Tilt left when moving up
                 }
             }
             else
             {
                 setYPosition(TargetY);
                 isChangingLanes=false;
+                rotateTransform.Angle = 0; // Straighten out when lane change is complete
             }
         }
         public virtual void Move()

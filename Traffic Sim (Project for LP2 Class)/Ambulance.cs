@@ -15,31 +15,52 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         }
         public override void Update(TrafficLight light, List<Vehicle> allVehicles)
         {
-            bool pathIsBlocked = false;
-            foreach (Vehicle vehicle in allVehicles)
+            HandleLaneMovement();
+            double otherLaneY = (TargetY == 50) ? 100 : 200;
+
+            bool pathIsBlocked = IsPathBlocked(allVehicles, getYPosition(), 60);
+            if (pathIsBlocked && !this.isChangingLanes)
             {
-                if (vehicle == this)
+                // try to go down (index + 1)
+                if (CurrentLaneIndex < MainWindow.Lanes.Length - 1)
                 {
-                    continue; // Skip self
+                    int nextLane = CurrentLaneIndex + 1;
+                    if (!IsPathBlocked(allVehicles, MainWindow.Lanes[nextLane], 100))
+                    {
+                        CurrentLaneIndex = nextLane;
+                        TargetY = MainWindow.Lanes[CurrentLaneIndex];
+                    }
                 }
-
-                if(vehicle.getYPosition() !=  this.getYPosition() )
+                // try to go up (Index - 1)
+                else if (CurrentLaneIndex > 0)
                 {
-                    continue; // Skip vehicles in different lanes
-                }
-                
-                double distance = vehicle.getXPosition() - this.getXPosition();
-
-                if (distance > 0 && distance < 60)
-                {
-                    pathIsBlocked = true;
-                    break; //We found someone, there is no need to keep looking
+                    int prevLane = CurrentLaneIndex - 1;
+                    if (!IsPathBlocked(allVehicles, MainWindow.Lanes[prevLane], 100))
+                    {
+                        CurrentLaneIndex = prevLane;
+                        TargetY = MainWindow.Lanes[CurrentLaneIndex];
+                    }
                 }
             }
             if (!pathIsBlocked)
             {
                 this.setXPosition(getXPosition() + getSpeed());
             } //ambulances do not care about lights
+
+        }
+        private bool IsPathBlocked(List<Vehicle> allVehicles, double laneY, double distanceCheck)
+        {
+            foreach (Vehicle vehicle in allVehicles)
+            {
+                if (vehicle == this) continue; // Skip self
+                if (Math.Abs(vehicle.getYPosition() - laneY) > 10) continue;
+                double dist = vehicle.getXPosition() - this.getXPosition();
+                if (dist > -20 && dist < distanceCheck)
+                {
+                    return true; // Path is blocked
+                }
+            }
+            return false; // Path is clear
         }
     }
 }
