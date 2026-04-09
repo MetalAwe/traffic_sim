@@ -44,7 +44,8 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             }
             if (!pathIsBlocked)
             {
-                this.setXPosition(getXPosition() + getSpeed());
+                double currentFrameSpeed = getSpeed() * MainWindow.TimeScale;
+                setXPosition(getXPosition() + currentFrameSpeed);
             } //ambulances do not care about lights when siren is active, they just go through, but they will try to change lanes to avoid traffic if possible
             if (SirenActive)
             {

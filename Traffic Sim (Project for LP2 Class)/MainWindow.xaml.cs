@@ -174,5 +174,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
                 TrafficCanvas.Children.Add(dashedLane2);
             }
         }
+
+        public static double TimeScale = 1.0;
+        private void SldSimSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            TimeScale = e.NewValue / 2; // The slider goes from 0 to 2, so dividing by 2 gives us a range of 0 to 1 for TimeScale, which is a more intuitive range for slowing down and speeding up the simulation.
+        }
     }
 }

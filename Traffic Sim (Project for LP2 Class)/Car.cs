@@ -49,7 +49,8 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             }
             else
             {
-                this.setXPosition(getXPosition() + getSpeed());
+                double currentFrameSpeed = getSpeed() * MainWindow.TimeScale;
+                setXPosition(getXPosition() + currentFrameSpeed);
             }
         }
         //Helper method to keep code clean (Abstraction)
