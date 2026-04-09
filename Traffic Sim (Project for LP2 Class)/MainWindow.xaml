@@ -38,6 +38,12 @@
                         <Button Content="Add Bus" Width="100" Margin="5" Click="AddBus" Height="20"/>
                     </StackPanel>
                 </GroupBox>
+                <GroupBox Header="Event Log" Margin="10" Height="200">
+                    <ListBox x:Name="ListLog" Background="#ECF0F1" BorderThickness="0" FontSize="10" 
+             ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    </ListBox>
+                </GroupBox>
+                <Button Content="Clear Log" Click="ClearLog_Click" FontSize="10" Margin="10,0,10,10"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

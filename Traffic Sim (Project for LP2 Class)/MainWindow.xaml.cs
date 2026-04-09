@@ -59,7 +59,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             timer.Start();
 
             DrawRoad();
-            
+
             //Position the light visually on the canvas:
             Canvas.SetLeft(mainLight.VisualShape, 300);
             Canvas.SetTop(mainLight.VisualShape, 142.5);
@@ -70,11 +70,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         {
             List<Vehicle> vehiclesToDelete = new List<Vehicle>();
 
-            foreach(Vehicle vehicle in allVehicles)
+            foreach (Vehicle vehicle in allVehicles)
             {
                 //we run the logic
                 vehicle.Update(mainLight, allVehicles);
-                
+
                 //Update the visual position on the canvas:
                 Canvas.SetLeft(vehicle.Shape, vehicle.getXPosition());
                 Canvas.SetTop(vehicle.Shape, vehicle.getYPosition());
@@ -87,11 +87,11 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             }
 
             TxtVehicleCount.Text = allVehicles.Count.ToString();
-            if(mainLight.CurrentColor == LightColor.green)
+            if (mainLight.CurrentColor == LightColor.green)
             {
                 LightIndicator.Fill = Brushes.Green;
             }
-            else if(mainLight.CurrentColor == LightColor.yellow)
+            else if (mainLight.CurrentColor == LightColor.yellow)
             {
                 LightIndicator.Fill = Brushes.Yellow;
             }
@@ -116,6 +116,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Car newCar = new Car("Car" + allVehicles.Count, randomSpeed, -100, startingLane, randomColor);
             allVehicles.Add(newCar);
             TrafficCanvas.Children.Add(newCar.Shape);
+            LogEvent($"Added car with speed {randomSpeed} in lane {startingLane}");
         }
 
         private void AddAmbulance(object sender, RoutedEventArgs e)
@@ -124,6 +125,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Ambulance newAmbulance = new Ambulance("Ambulance" + allVehicles.Count, 10, -100, startingLane, Brushes.White);
             allVehicles.Add(newAmbulance);
             TrafficCanvas.Children.Add(newAmbulance.Shape);
+            LogEvent($"Added ambulance in lane {startingLane}");
         }
 
         private void AddBus(object sender, RoutedEventArgs e)
@@ -131,6 +133,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             Bus newBus = new Bus("D250POD", 5, -100, 0, Brushes.Green);
             allVehicles.Add(newBus);
             TrafficCanvas.Children.Add(newBus.Shape);
+            LogEvent($"Added bus in bus lane");
         }
 
         private void DrawRoad()
@@ -179,6 +182,19 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         private void SldSimSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TimeScale = e.NewValue / 2; // The slider goes from 0 to 2, so dividing by 2 gives us a range of 0 to 1 for TimeScale, which is a more intuitive range for slowing down and speeding up the simulation.
+        }
+
+        public void LogEvent(string message)
+        {
+            string time = DateTime.Now.ToString("HH:mm:ss");
+            ListLog.Items.Insert(0, $"[{time}] {message}");
+
+            if (ListLog.Items.Count > 50) ListLog.Items.RemoveAt(50);
+        }
+
+        private void ClearLog_Click(object sender, RoutedEventArgs e)
+        {
+            ListLog.Items.Clear();
         }
     }
 }
