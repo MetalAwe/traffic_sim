@@ -43,7 +43,7 @@
              ScrollViewer.VerticalScrollBarVisibility="Visible">
                     </ListBox>
                 </GroupBox>
-                <Button Content="Clear Log" Click="ClearLog_Click" FontSize="10" Margin="10,0,10,10"/>
+                <Button Content="Clear Log" Click="ClearLog_Click" FontSize="10" Margin="10,0,10,10" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

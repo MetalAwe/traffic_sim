@@ -36,6 +36,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
         {
             InitializeComponent();
 
+            DrawRoad();
             //We create our objects
             Car car = new Car("B250POD", 10, 0, 1, Brushes.Blue);
             allVehicles.Add(car);
@@ -58,7 +59,6 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             timer.Tick += GameLoop; // This calls the GameLoop method every tick
             timer.Start();
 
-            DrawRoad();
 
             //Position the light visually on the canvas:
             Canvas.SetLeft(mainLight.VisualShape, 300);
@@ -109,7 +109,7 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         private void AddCar(object sender, RoutedEventArgs e)
         {
-            int startingLane = rng.Next(0, MainWindow.Lanes.Length);
+            int startingLane = rng.Next(1, MainWindow.Lanes.Length);
             double randomSpeed = rng.Next(5, 15);
             int colorIndex = rng.Next(availableColors.Length);
             Brush randomColor = availableColors[colorIndex];
@@ -138,6 +138,23 @@ namespace Traffic_Sim__Project_for_LP2_Class_
 
         private void DrawRoad()
         {
+            Rectangle busAsphalt = new Rectangle { Width = 2000, Height = 40, Fill = Brushes.Gray };
+            Canvas.SetTop(busAsphalt, MainWindow.Lanes[MainWindow.BusLaneIndex]-5);
+            TrafficCanvas.Children.Add(busAsphalt);
+            for (int x = 100; x < 2000; x += 800)
+            {
+                TextBlock busText = new TextBlock
+                {
+                    Text = "BUS ONLY",
+                    Foreground = Brushes.Yellow,
+                    FontSize = 20,
+                    Opacity = 0.3
+                };
+                Canvas.SetLeft(busText, x);
+                Canvas.SetTop(busText, MainWindow.Lanes[MainWindow.BusLaneIndex] - 5);
+                TrafficCanvas.Children.Add(busText);
+            }
+
             Rectangle topShoulder = new Rectangle { Width = 2000, Height = 10, Fill = Brushes.DarkGray };
             Canvas.SetTop(topShoulder, 40);
             TrafficCanvas.Children.Add(topShoulder);

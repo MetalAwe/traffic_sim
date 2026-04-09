@@ -17,24 +17,22 @@ namespace Traffic_Sim__Project_for_LP2_Class_
             bool pathIsBlocked = IsPathBlocked(AllVehicles, getYPosition(), 60);
             if (pathIsBlocked && !this.isChangingLanes)
             {
-                // try to go down (index + 1)
-                if (CurrentLaneIndex < MainWindow.Lanes.Length - 1)
+                int[] possibleLanes = { CurrentLaneIndex + 1, CurrentLaneIndex - 1 };
+                foreach (int nextIndex in possibleLanes)
                 {
-                    int nextLane = CurrentLaneIndex + 1;
-                    if (!IsPathBlocked(AllVehicles, MainWindow.Lanes[nextLane], 100))
+                    if (nextIndex < 0 || nextIndex >= MainWindow.Lanes.Length) continue; // skip out of bounds
+                    if (nextIndex == MainWindow.BusLaneIndex) continue;
+                    if ((CurrentLaneIndex == MainWindow.MedianIndex && nextIndex == MainWindow.MedianIndex + 1) ||
+                (CurrentLaneIndex == MainWindow.MedianIndex + 1 && nextIndex == MainWindow.MedianIndex))
                     {
-                        CurrentLaneIndex = nextLane;
-                        TargetY = MainWindow.Lanes[CurrentLaneIndex];
+                        continue; // illegal move
                     }
-                }
-                // try to go up (Index - 1)
-                else if (CurrentLaneIndex > 0)
-                {
-                    int prevLane = CurrentLaneIndex - 1;
-                    if (!IsPathBlocked(AllVehicles, MainWindow.Lanes[prevLane], 100))
+                    // is the other lane clear
+                    if (pathIsBlocked)
                     {
-                        CurrentLaneIndex = prevLane;
+                        CurrentLaneIndex = nextIndex;
                         TargetY = MainWindow.Lanes[CurrentLaneIndex];
+                        break;
                     }
                 }
             }
